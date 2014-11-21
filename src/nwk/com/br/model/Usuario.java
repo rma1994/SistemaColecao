@@ -5,6 +5,7 @@
  */
 package nwk.com.br.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -16,6 +17,8 @@ public class Usuario {
     private String nome;
     private String senha;
     private Date data;
+    
+    SimpleDateFormat sdf1= new SimpleDateFormat("yyyy-MM-dd");
 
     public int getCod() {
         return cod;
@@ -45,7 +48,11 @@ public class Usuario {
         return data;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setData(String data) {
+        try{
+            this.data = sdf1.parse(data);
+        }catch(Exception e){
+              System.out.println("Erro DH Nascimento Funcionario" + this.getClass().getName().toString() + ") - " + e.getMessage());
+        }
     }
 }

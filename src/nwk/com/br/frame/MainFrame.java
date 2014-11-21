@@ -21,7 +21,7 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         //Maximiza essa tela
         
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
     }
     
     

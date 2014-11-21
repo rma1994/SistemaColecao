@@ -5,43 +5,34 @@
  */
 package nwk.com.br.structures;
 
+import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 import nwk.com.br.dao.UsuarioDAO;
+import nwk.com.br.model.Usuario;
 
 /**
  *
  * @author Richard Matheus
  */
 public class UsuarioStru {
+    private SimpleDateFormat sdf1= new SimpleDateFormat("dd-MM-yyyy");//formato de data
+    
      public DefaultTableModel getTable() {
         
         UsuarioDAO usuariodao = new UsuarioDAO();
         int l = 0;
         
         //PEGA A QUANTIA DE LINHAS DA TABELA
-        int max = usuariodao.getQuantiaLinha();
+        int max = usuariodao.getQuantiaLinhas();
         
-        String[] colunas = new String[]{"ID", "Nome", "E-Mail", "Telefone", "CPF/CNPJ", "Celular", "Tipo", "Rua", "Numero", "Bairro", "Complemento", "Cidade", "Estado", "CEP", "Status", "Observações"};
+        String[] colunas = new String[]{"ID", "Nome", "Cadastro"};
         String[][] dados = new String[max][16];
         
-        //Para cada funcionario em getTodosFuncionarios, coloque esses dados na tabela
-        for (Cliente cliente : clientedao.getTodosClientes()){
-            dados[l][0] = Integer.toString(cliente.getId());
-            dados[l][1] = cliente.getNome();
-            dados[l][2] = cliente.getEmail();
-            dados[l][3] = cliente.getTelefone();
-            dados[l][4] = cliente.getCpf_cnpj();
-            dados[l][5] = cliente.getCelular();
-            dados[l][6] = cliente.getTipoCliente();
-            dados[l][7] = cliente.getRua();
-            dados[l][8] = cliente.getNumero();
-            dados[l][9] = cliente.getBairro();
-            dados[l][10] = cliente.getComplemento();
-            dados[l][11] = cliente.getCidade();
-            dados[l][12] = cliente.getEstado();
-            dados[l][13] = cliente.getCep();
-            dados[l][14] = cliente.getStatus().getValue();
-            dados[l][15] = cliente.getObservacoes();
+        //Para cada usuario em getTodosUsuarios, coloque esses dados na tabela
+        for (Usuario usuario : usuariodao.getTodosUsuarios()){
+            dados[l][0] = Integer.toString(usuario.getCod());
+            dados[l][1] = usuario.getNome();
+            dados[l][2] = sdf1.format(usuario.getData()).toString();
             
             l++;
         }

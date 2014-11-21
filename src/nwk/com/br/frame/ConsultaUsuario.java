@@ -5,17 +5,32 @@
  */
 package nwk.com.br.frame;
 
+import javax.swing.table.TableModel;
+import nwk.com.br.structures.UsuarioStru;
+
 /**
  *
  * @author Richard Matheus
  */
 public class ConsultaUsuario extends javax.swing.JInternalFrame {
-
+    UsuarioStru stru = new UsuarioStru();
     /**
      * Creates new form ConsultaUsuario
      */
     public ConsultaUsuario() {
         initComponents();
+        atualizaTable();
+    }
+    
+    //Carrega os dados na tabela
+    private void atualizaTable(){
+        TableModel model = (TableModel) (stru.getTable());
+        jTableUsuario.setModel(model);
+        
+        //Seta as dimensões das colunas
+        /*jTableClientes.getColumnModel().getColumn(0).setMinWidth(35);
+        jTableClientes.getColumnModel().getColumn(0).setMaxWidth(35);
+        jTableClientes.getColumnModel().getColumn(1).setPreferredWidth(350);*/
     }
 
     /**
