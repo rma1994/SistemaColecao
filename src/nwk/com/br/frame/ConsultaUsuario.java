@@ -7,7 +7,9 @@ package nwk.com.br.frame;
 
 import javax.swing.JDesktopPane;
 import javax.swing.table.TableModel;
+import nwk.com.br.documents.ControleSenhaTabela;
 import nwk.com.br.structures.UsuarioStru;
+import nwk.com.br.model.Usuario;
 
 /**
  *
@@ -30,13 +32,19 @@ public class ConsultaUsuario extends javax.swing.JInternalFrame {
         jTableUsuario.setModel(model);
         
         //Seta as dimensões das colunas
-        /*jTableClientes.getColumnModel().getColumn(0).setMinWidth(35);
-        jTableClientes.getColumnModel().getColumn(0).setMaxWidth(35);
-        jTableClientes.getColumnModel().getColumn(1).setPreferredWidth(350);*/
+        jTableUsuario.getColumnModel().getColumn(0).setMinWidth(35);
+        jTableUsuario.getColumnModel().getColumn(0).setMaxWidth(35);
+        
+        jTableUsuario.getColumnModel().getColumn(2).setMinWidth(100);
+        jTableUsuario.getColumnModel().getColumn(2).setMaxWidth(100);
+        //jTableClientes.getColumnModel().getColumn(1).setPreferredWidth(350);
     }
     
     //recebe a desktoppane do mainframe
     public void addConsultaCliente(JDesktopPane frame){
+        //Faz com que o campo de senhas da tabela nao mostra o valor real das senhas
+        jTableUsuario.getColumnModel().getColumn(3).setCellRenderer(new ControleSenhaTabela());;
+        
         this.jDesktopPanePrincipal = frame;
         jDesktopPanePrincipal.add(this);
         this.setVisible(true);
@@ -72,6 +80,11 @@ public class ConsultaUsuario extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableUsuarioMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableUsuario);
 
         jButtonInserir.setText("Inserir");
@@ -96,7 +109,7 @@ public class ConsultaUsuario extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonInserir, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(jButtonInserir, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -110,6 +123,22 @@ public class ConsultaUsuario extends javax.swing.JInternalFrame {
         dispose();
         cadUsuario.addCadUsuarioNew(jDesktopPanePrincipal);
     }//GEN-LAST:event_jButtonInserirActionPerformed
+
+    private void jTableUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarioMouseClicked
+        Usuario usuario = new Usuario();
+        CadUsuario cadUsuario = new CadUsuario();
+        
+        int linhaSelecionada = jTableUsuario.getSelectedRow();
+        
+        usuario.setCod(Integer.parseInt(jTableUsuario.getValueAt(linhaSelecionada, 0).toString()));
+        usuario.setNome(jTableUsuario.getValueAt(linhaSelecionada, 1).toString());
+        usuario.setData(jTableUsuario.getValueAt(linhaSelecionada, 2).toString());
+        usuario.setSenha(jTableUsuario.getValueAt(linhaSelecionada, 3).toString());
+        usuario.setUpdate(true);
+        
+        dispose();
+        cadUsuario.addCadUsuarioUpdate(jDesktopPanePrincipal, usuario);
+    }//GEN-LAST:event_jTableUsuarioMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

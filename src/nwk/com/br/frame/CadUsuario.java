@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import nwk.com.br.dao.UsuarioDAO;
 import nwk.com.br.documents.ControleTexto;
 import nwk.com.br.model.Usuario;
@@ -33,9 +34,12 @@ public class CadUsuario extends javax.swing.JInternalFrame {
         setDocuments();
     }
     
-    //Adiciona o Internal Frame Usuario ao desktopPane
+    //Adiciona o Internal Frame Usuario ao desktopPane para o cadastro de um novo usuario
     public void addCadUsuarioNew(JDesktopPane frame){
         this.jDesktopPanePrincipal = frame;
+        
+        //Diz que esse usuario nao é para update e sim para insert
+        this.usuario.setUpdate(false);
         
         //Esconde e desabilita o botao EXCLUIR
         jButtonExluir.setVisible(false);
@@ -45,6 +49,22 @@ public class CadUsuario extends javax.swing.JInternalFrame {
         addData();
         addCod();
                 
+        //Adiciona o Internal Frame Usuario ao desktopPane
+        frame.add(this);
+        this.setVisible(true);
+    }
+    
+    //Adiciona o Internal Frame Usuario ao desktopPane para a atualização de um usuario ja existente
+    public void addCadUsuarioUpdate(JDesktopPane frame, Usuario user){
+        this.usuario = user;
+        
+        
+        //Pega os valor do usuario em questao e os adiciona aos seus respectivos campos
+        jTextCod.setText(Integer.toString(user.getCod()));
+        jTextNome.setText(user.getNome());
+        jPassword.setText(user.getSenha());
+        jTextDCadastro.setText(sdf1.format(user.getData()).toString());
+        
         //Adiciona o Internal Frame Usuario ao desktopPane
         frame.add(this);
         this.setVisible(true);
@@ -70,7 +90,7 @@ public class CadUsuario extends javax.swing.JInternalFrame {
         boolean valido = false;
         
         //se os campos forem preenchidos, torna o formulario valido
-        if((usuario.getNome() != null) || (usuario.getSenha() != null)){
+        if((usuario.getNome() != null) && (usuario.getSenha() != null) && (!usuario.getNome().equals("")) && (!usuario.getSenha().equals(""))){
             valido = true;
             System.out.println("validado");
         }
@@ -83,6 +103,7 @@ public class CadUsuario extends javax.swing.JInternalFrame {
         jTextNome.setDocument(new ControleTexto(60));
         jPassword.setDocument(new ControleTexto(8));
     }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -176,8 +197,18 @@ public class CadUsuario extends javax.swing.JInternalFrame {
         });
 
         jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
 
         jButtonExluir.setText("Excluir");
+        jButtonExluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -222,23 +253,72 @@ public class CadUsuario extends javax.swing.JInternalFrame {
         usuario.setSenha(jPassword.getText());
         usuario.setData(jTextDCadastro.getText());
         
+        
         valido = validaUsuario(usuario);
         
         if(valido == true){
-            if(usuario.isUpdate() == false){
+            if(this.usuario.isUpdate() == false){
                 
+                //Recebe o retorno se o usuario foi inserido com sucesso ou nao
                 inserido = usuariodao.inserir(usuario);
                 if(inserido == true){
                     JOptionPane.showMessageDialog(null, "Usuario Inserido Com Sucesso");
                     dispose();
-                } else if(inserido == false){
-                    JOptionPane.showMessageDialog(null, "Ocorreu um erro");
-                }
+                } 
+                
+            }else if(this.usuario.isUpdate() == true){
+                //Recebe o retorno se o usuario foi atualizado com sucesso ou nao
+                inserido = usuariodao.atualizar(usuario);
+                if(inserido == true){
+                    JOptionPane.showMessageDialog(null, "Usuario Atualizado Com Sucesso");
+                    dispose();
+                } 
             }
+            
         } else if(valido == false){
             JOptionPane.showMessageDialog(null, "Campos Não preenchidos, verifique!");
         }
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        //Altera as mensagens da caixa de confirmação para Sim ou Não
+        UIManager.put("OptionPane.yesButtonText", "Sim");  
+        UIManager.put("OptionPane.noButtonText", "Não");
+        
+        //Mostra uma caixa de confirmação se o usuario deseja mesmo sair
+        switch(JOptionPane.showConfirmDialog(null, "Deseja Mesmo Sair?", "Confirma" ,JOptionPane.YES_NO_OPTION)){
+            case 0:
+                setVisible(false);
+                dispose();
+                break;
+            case 1:
+                break;
+        }
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonExluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExluirActionPerformed
+        //Altera as mensagens da caixa de confirmação para Sim ou Não
+        UIManager.put("OptionPane.yesButtonText", "Sim");  
+        UIManager.put("OptionPane.noButtonText", "Não");
+        
+        //Mostra uma caixa de confirmação se o usuario deseja mesmo sair
+        switch(JOptionPane.showConfirmDialog(null, "Deseja Mesmo Exluir Esse Usuario?", "Confirma" ,JOptionPane.YES_NO_OPTION)){
+            case 0:
+                Usuario usuario = new Usuario();
+                boolean valido = false;
+                
+                usuario.setCod(Integer.parseInt(jTextCod.getText()));
+                valido = usuariodao.excluir(usuario);
+                
+                if(valido){
+                    JOptionPane.showMessageDialog(null, "Usuario Excluido Com Sucesso!");
+                    dispose();
+                }
+                break;
+            case 1:
+                break;
+        }
+    }//GEN-LAST:event_jButtonExluirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

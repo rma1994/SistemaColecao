@@ -25,7 +25,7 @@ public class UsuarioStru {
         //PEGA A QUANTIA DE LINHAS DA TABELA
         int max = usuariodao.getQuantiaLinhas();
         
-        String[] colunas = new String[]{"ID", "Nome", "Cadastro"};
+        String[] colunas = new String[]{"ID", "Nome", "Cadastro","Senha"};
         String[][] dados = new String[max][16];
         
         //Para cada usuario em getTodosUsuarios, coloque esses dados na tabela
@@ -33,6 +33,7 @@ public class UsuarioStru {
             dados[l][0] = Integer.toString(usuario.getCod());
             dados[l][1] = usuario.getNome();
             dados[l][2] = sdf1.format(usuario.getData()).toString();
+            dados[l][3] = usuario.getSenha();
             
             l++;
         }
@@ -44,6 +45,7 @@ public class UsuarioStru {
             return false;
         }
     };
+    
     
     //Retorna o modelo gerado aqui
     return model;

@@ -28,6 +28,9 @@ public class UsuarioDAO {
     public boolean inserir(Usuario usuario){
         boolean result = false;
         
+        System.out.println(usuario.getData());
+        System.out.println(formatDate.format(usuario.getData()));
+        
         String sql = "INSERT INTO Usuario(nome, senha, data)"
                                                 + " VALUES('" + usuario.getNome()+ "',"
                                                        + "'" + usuario.getSenha()+ "',"
@@ -109,7 +112,8 @@ public class UsuarioDAO {
                 
                 usuario.setCod(rs.getInt("Cod"));
                 usuario.setNome(rs.getString("Nome"));
-                usuario.setData(rs.getString("Data"));
+                usuario.setDataSelect(rs.getString("Data"));
+                usuario.setSenha(rs.getString("senha"));
                 
                 result.add(usuario);
             }
@@ -168,4 +172,45 @@ public class UsuarioDAO {
         return cod;
     }
     
+    //Atualiza o usuario ja cadastrao no banco de dados
+    public boolean atualizar(Usuario usuario){
+        boolean result = false;
+        
+        String sql = "UPDATE usuario"
+                    + " SET nome = '" + usuario.getNome() + "',"
+                    + "senha = '" + usuario.getSenha() + "' "
+                + "WHERE cod = '" + usuario.getCod() + "'";
+        try{
+            conn = Database.getInstance().getConnection();
+            Statement stm = this.conn.createStatement();
+            stm.executeUpdate(sql);
+            System.out.println("Usuario Atualizado Com Sucesso!");
+            result = true;
+            stm.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar \n\n(" + this.getClass().getName().toString() + ") - " + e.getMessage()); 
+            System.out.println("Erro ao tentar atualizar (" + this.getClass().getName().toString() + ") - " + e.getMessage());
+        }
+        return result;
+    }
+    
+    //Exclui o usuario ja cadastrao no banco de dados
+    public boolean excluir(Usuario usuario){
+        boolean result = false;
+        
+        String sql = "DELETE FROM usuario "
+                + "WHERE cod = '" + usuario.getCod() + "'";
+        try{
+            conn = Database.getInstance().getConnection();
+            Statement stm = this.conn.createStatement();
+            stm.executeUpdate(sql);
+            System.out.println("Usuario Excluido Com Sucesso!");
+            result = true;
+            stm.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao tentar excluir \n\n(" + this.getClass().getName().toString() + ") - " + e.getMessage()); 
+            System.out.println("Erro ao tentar excluir (" + this.getClass().getName().toString() + ") - " + e.getMessage());
+        }
+        return result;
+    }
 }

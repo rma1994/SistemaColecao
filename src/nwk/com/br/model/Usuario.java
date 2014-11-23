@@ -19,7 +19,10 @@ public class Usuario {
     private Date data;
     private boolean update = false;
     
-    private SimpleDateFormat sdf1= new SimpleDateFormat("yyyy-MM-dd");
+    //Formata a data de acordo com o formato de exibição
+    private SimpleDateFormat sdf1= new SimpleDateFormat("dd-MM-yyyy");
+    //Formata a data de acordo com o formato de inserção do banco de dados
+    private SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd");
 
     public int getCod() {
         return cod;
@@ -52,8 +55,9 @@ public class Usuario {
     public void setData(String data) {
         try{
             this.data = sdf1.parse(data);
+            //System.out.println(this.data + "  " + data);
         }catch(Exception e){
-              System.out.println("Erro DH Nascimento Funcionario" + this.getClass().getName().toString() + ") - " + e.getMessage());
+              System.out.println("Erro Data Usuario" + this.getClass().getName().toString() + ") - " + e.getMessage());
         }
     }
 
@@ -66,5 +70,12 @@ public class Usuario {
         this.update = update;
     }
 
-
+    public void setDataSelect(String data) {
+        try{
+            this.data = sdf2.parse(data);
+            //System.out.println(this.data + "  " + data);
+        }catch(Exception e){
+              System.out.println("Erro Data Usuario" + this.getClass().getName().toString() + ") - " + e.getMessage());
+        }
+    }
 }
