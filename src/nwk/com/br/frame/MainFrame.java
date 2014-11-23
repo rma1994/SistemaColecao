@@ -6,6 +6,7 @@
 package nwk.com.br.frame;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import nwk.com.br.model.Usuario;
 
 /**
@@ -140,9 +141,8 @@ public class MainFrame extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         ConsultaUsuario consulUsuario = new ConsultaUsuario();
         
-        jDesktopPanePrincipal.add(consulUsuario);
-        consulUsuario.setVisible(true);
-        
+        //envia essa Desktop Pane para o Internal Frame Usuario
+        consulUsuario.addConsultaCliente(jDesktopPanePrincipal);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed

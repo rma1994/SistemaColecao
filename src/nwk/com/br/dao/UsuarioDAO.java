@@ -29,7 +29,7 @@ public class UsuarioDAO {
         boolean result = false;
         
         String sql = "INSERT INTO Usuario(nome, senha, data)"
-                                                + "VALUES('" + usuario.getNome()+ "',"
+                                                + " VALUES('" + usuario.getNome()+ "',"
                                                        + "'" + usuario.getSenha()+ "',"
                                                        + "'" + formatDate.format(usuario.getData() ) + "') ";
         try{
@@ -133,7 +133,6 @@ public class UsuarioDAO {
             Statement stm = this.conn.createStatement();
             ResultSet rs = stm.executeQuery(sql);
             
-            //Caso o cliente exista, muda o resultado para verdadeiro.
             while(rs.next()){
                 usuario.setNome(rs.getString("nome"));
             }
@@ -144,6 +143,29 @@ public class UsuarioDAO {
             System.out.println("Erro ao tentar consultar (" + this.getClass().getName().toString() + ") - " + e.getMessage());
         }         
         return usuario;
+    }
+    
+    //Retorna o ultimo id cadastrado no programa
+    public int getMaxCod(){
+        int cod = 0;
+        
+        String sql = "SELECT MAX(cod) AS cod FROM usuario";
+        
+        try{
+            conn = Database.getInstance().getConnection();
+            Statement stm = this.conn.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+            
+            while(rs.next()){
+                cod = rs.getInt("cod");
+            }
+            
+            stm.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao tentar consultar \n\n(" + this.getClass().getName().toString() + ") - " + e.getMessage()); 
+            System.out.println("Erro ao tentar consultar (" + this.getClass().getName().toString() + ") - " + e.getMessage());
+        }         
+        return cod;
     }
     
 }

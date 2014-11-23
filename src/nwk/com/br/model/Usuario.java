@@ -17,8 +17,9 @@ public class Usuario {
     private String nome;
     private String senha;
     private Date data;
+    private boolean update = false;
     
-    SimpleDateFormat sdf1= new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat sdf1= new SimpleDateFormat("yyyy-MM-dd");
 
     public int getCod() {
         return cod;
@@ -55,4 +56,15 @@ public class Usuario {
               System.out.println("Erro DH Nascimento Funcionario" + this.getClass().getName().toString() + ") - " + e.getMessage());
         }
     }
+
+    
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        this.update = update;
+    }
+
+
 }

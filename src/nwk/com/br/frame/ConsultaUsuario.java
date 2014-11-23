@@ -5,6 +5,7 @@
  */
 package nwk.com.br.frame;
 
+import javax.swing.JDesktopPane;
 import javax.swing.table.TableModel;
 import nwk.com.br.structures.UsuarioStru;
 
@@ -13,7 +14,8 @@ import nwk.com.br.structures.UsuarioStru;
  * @author Richard Matheus
  */
 public class ConsultaUsuario extends javax.swing.JInternalFrame {
-    UsuarioStru stru = new UsuarioStru();
+    private UsuarioStru stru = new UsuarioStru();
+    private JDesktopPane jDesktopPanePrincipal = new JDesktopPane();
     /**
      * Creates new form ConsultaUsuario
      */
@@ -31,6 +33,13 @@ public class ConsultaUsuario extends javax.swing.JInternalFrame {
         /*jTableClientes.getColumnModel().getColumn(0).setMinWidth(35);
         jTableClientes.getColumnModel().getColumn(0).setMaxWidth(35);
         jTableClientes.getColumnModel().getColumn(1).setPreferredWidth(350);*/
+    }
+    
+    //recebe a desktoppane do mainframe
+    public void addConsultaCliente(JDesktopPane frame){
+        this.jDesktopPanePrincipal = frame;
+        jDesktopPanePrincipal.add(this);
+        this.setVisible(true);
     }
 
     /**
@@ -66,6 +75,11 @@ public class ConsultaUsuario extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTableUsuario);
 
         jButtonInserir.setText("Inserir");
+        jButtonInserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInserirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,6 +103,13 @@ public class ConsultaUsuario extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInserirActionPerformed
+        // TODO add your handling code here:
+        CadUsuario cadUsuario = new CadUsuario();
+        dispose();
+        cadUsuario.addCadUsuarioNew(jDesktopPanePrincipal);
+    }//GEN-LAST:event_jButtonInserirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
