@@ -35,8 +35,9 @@ public class ConsultaLivro extends javax.swing.JInternalFrame {
         jTableLivros.getColumnModel().getColumn(0).setMinWidth(35);
         jTableLivros.getColumnModel().getColumn(0).setMaxWidth(35);
         
-        jTableLivros.getColumnModel().getColumn(2).setMinWidth(100);
-        jTableLivros.getColumnModel().getColumn(2).setMaxWidth(100);
+        jTableLivros.getColumnModel().getColumn(1).setMinWidth(270);
+        jTableLivros.getColumnModel().getColumn(2).setMinWidth(50);
+        jTableLivros.getColumnModel().getColumn(3).setMinWidth(100);
         //jTableClientes.getColumnModel().getColumn(1).setPreferredWidth(350);
     }
     
@@ -78,6 +79,7 @@ public class ConsultaLivro extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableLivros.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jTableLivros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableLivrosMouseClicked(evt);
