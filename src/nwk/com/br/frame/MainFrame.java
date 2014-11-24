@@ -20,9 +20,9 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
-        //Maximiza essa tela
         
-        //this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        //Maximiza essa tela
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
     }
     
     
@@ -50,7 +50,6 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItemJogos = new javax.swing.JMenuItem();
         jMenuItemPlataforma = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Coleções");
@@ -107,6 +106,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu1.add(jSeparator2);
 
         jMenuItemJogos.setText("Jogos");
+        jMenuItemJogos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemJogosActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItemJogos);
 
         jMenuItemPlataforma.setText("Plataformas");
@@ -118,9 +122,6 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu1.add(jMenuItemPlataforma);
 
         jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Sobre");
-        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -163,6 +164,13 @@ public class MainFrame extends javax.swing.JFrame {
         consulPlataforma.addConsultaPlataforma(jDesktopPanePrincipal);
     }//GEN-LAST:event_jMenuItemPlataformaActionPerformed
 
+    private void jMenuItemJogosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemJogosActionPerformed
+        ConsultaJogo consulJogo = new ConsultaJogo();
+        
+        //envia essa Desktop Pane para o Internal Frame Usuario
+        consulJogo.addConsultaJogo(jDesktopPanePrincipal);
+    }//GEN-LAST:event_jMenuItemJogosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -202,7 +210,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPanePrincipal;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemJogos;
     private javax.swing.JMenuItem jMenuItemLivro;

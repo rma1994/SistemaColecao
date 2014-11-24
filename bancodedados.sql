@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 24-Nov-2014 às 15:26
+-- Generation Time: 24-Nov-2014 às 15:32
 -- Versão do servidor: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -31,7 +31,7 @@ USE `4bimestre`;
 CREATE TABLE IF NOT EXISTS `jogo` (
 `cod` int(11) NOT NULL,
   `nome` varchar(60) NOT NULL,
-  `plataforma` int(11) NOT NULL,
+  `plataforma` varchar(60) NOT NULL,
   `data` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
