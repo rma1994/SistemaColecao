@@ -157,7 +157,10 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemLivroActionPerformed
 
     private void jMenuItemPlataformaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPlataformaActionPerformed
-        // TODO add your handling code here:
+        ConsultaPlataforma consulPlataforma = new ConsultaPlataforma();
+        
+        //envia essa Desktop Pane para o Internal Frame Usuario
+        consulPlataforma.addConsultaPlataforma(jDesktopPanePrincipal);
     }//GEN-LAST:event_jMenuItemPlataformaActionPerformed
 
     /**
